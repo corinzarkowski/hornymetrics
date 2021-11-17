@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Reddit Porn</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="container">
+
+  <div class="jumbotron d-flex justify-content-center">
+    <h1 class="big-porn-text">Input subreddit to check porn score</h1>
+  </div>
+
+  <form id="porn-form" class="form" novalidate>
+    <div class="form-group row d-flex justify-content-center small-porn-text">
+      <label for="subInput">Enter subreddit to check:</label>
+      <input type="search" id="subInput" class="form-control" required>
+      <div class="invalid-feedback">Could not find subreddit</div>
+      <button type="submit" style="margin-top:1%;" class="btn btn-primary">Submit</button>
+    </div>
+    <div id="result"></div>
+  </form>
+
+  <!-- include JavaScript file -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script>
+    // `https://subredditstats.com/subreddit-user-overlaps/${subToCheck}`
+
+    $( "#porn-form" ).submit(function(e) {
+      e.preventDefault();
+
+      let subToCheck = $( "#subInput" ).val();
+
+      // $.get('https://api.allorigins.win/get?url=' + encodeURIComponent('https://subredditstats.com/subreddit-user-overlaps/nsfw'), function (data) {
+      //   console.log(data.contents);
+      //   $( "#result" ).html(data.contents);
+      // });
+
+      $.ajax({
+        url: 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://subredditstats.com/subreddit-user-overlaps/nsfw'),
+        beforeSend: function( xhr ) {
+          xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+          setTimeout(1000000);
+        },
+        timeout: 1000,
+      })
+        .done(function( data ) {
+          data = JSON.parse(data);
+          console.log(data.contents);
+          $( "#result" ).html(data.contents);
+        });
+
+
+    })
+  </script>
+</body>
+</html>
